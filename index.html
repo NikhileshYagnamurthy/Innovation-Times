@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The Innovation Times - Login/Signup</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+  body {
+    margin: 0; padding: 30px 15px;
+    font-family: 'Roboto', sans-serif;
+    background: #f6f8fa;
+    color: #2b2f38;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 3rem;
+    user-select: none;
+  }
+
+  header h1 {
+    font-weight: 700;
+    font-size: 3.6rem;
+    letter-spacing: 0.12em;
+    color: #37474f;
+    position: relative;
+  }
+
+  header h1::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 100%;
+    height: 8px;
+    border-radius: 10px;
+    background: linear-gradient(90deg, #607d8b, #90a4ae);
+    filter: blur(6px);
+    opacity: 0.35;
+  }
+
+  header h2 {
+    font-weight: 400;
+    font-style: italic;
+    font-size: 1.8rem;
+    color: #607d8b;
+    margin-top: 0.3em;
+  }
+
+  /* Tabs container */
+  .tab-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    max-width: 400px;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .tab-buttons button {
+    flex: 1;
+    background: linear-gradient(145deg, #e0e6eb, #c7d0d8);
+    border-radius: 30px 30px 0 0;
+    border: 1.5px solid transparent;
+    padding: 10px 0;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #37474f;
+    cursor: pointer;
+    box-shadow:
+      inset 0 1.5px 0 #f9fbfc,
+      0 6px 12px rgba(0, 0, 0, 0.06);
+    transition:
+      background 0.3s ease,
+      box-shadow 0.3s ease,
+      border-color 0.3s ease,
+      color 0.3s ease;
+    user-select: none;
+    position: relative;
+  }
+
+  .tab-buttons button.active,
+  .tab-buttons button:hover {
+    background: linear-gradient(145deg, #b0bec5, #90a4ae);
+    box-shadow:
+      inset 0 1.5px 0 #dfe7ec,
+      0 10px 20px rgba(0, 0, 0, 0.12);
+    border-color: #78909c;
+    color: #263238;
+  }
+
+  .tab-buttons button.active::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 20%;
+    width: 60%;
+    height: 4px;
+    border-radius: 10px 10px 0 0;
+    background: #78909c;
+  }
+
+  form {
+    margin: 0 auto;
+    max-width: 400px;
+    width: 100%;
+    background: #f6f8fa;
+    border-radius: 30px;
+    padding: 30px 30px 40px;
+    box-shadow:
+      5px 5px 10px #bcc6d0,
+      -5px -5px 10px #ffffff;
+  }
+
+  label {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 0.6rem;
+    color: #37474f;
+    font-size: 1rem;
+  }
+
+  input[type="text"],
+  input[type="password"],
+  input[type="email"] {
+    width: 100%;
+    padding: 12px 20px;
+    margin-bottom: 1.8rem;
+    font-size: 1rem;
+    border: 1.5px solid #c7d0d8;
+    border-radius: 30px;
+    background: linear-gradient(145deg, #e0e6eb, #c7d0d8);
+    box-shadow: inset 4px 4px 8px #b0bec5,
+                inset -4px -4px 8px #ffffff;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    font-family: 'Roboto', sans-serif;
+  }
+
+  input[type="text"]:focus,
+  input[type="password"]:focus,
+  input[type="email"]:focus {
+    outline: none;
+    border-color: #78909c;
+    box-shadow: 0 0 12px #78909c;
+  }
+
+  button.submit-btn {
+    background: linear-gradient(145deg, #e0e6eb, #c7d0d8);
+    border-radius: 30px;
+    border: 1.5px solid transparent;
+    padding: 14px 40px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #37474f;
+    cursor: pointer;
+    box-shadow:
+      inset 0 1.5px 0 #f9fbfc,
+      0 8px 18px rgba(0, 0, 0, 0.08);
+    transition: background 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    user-select: none;
+    width: 100%;
+  }
+
+  button.submit-btn:hover {
+    background: linear-gradient(145deg, #b0bec5, #90a4ae);
+    box-shadow:
+      inset 0 1.5px 0 #dfe7ec,
+      0 12px 28px rgba(0, 0, 0, 0.12);
+    border-color: #78909c;
+    color: #263238;
+  }
+
+  /* Hide forms by default */
+  .form-container {
+    display: none;
+  }
+  .form-container.active {
+    display: block;
+  }
+
+  footer {
+    margin-top: auto;
+    font-size: 0.85rem;
+    color: #90a4ae;
+    text-align: center;
+    padding: 30px 0 20px 0;
+  }
+
+  /* Responsive tweak */
+  @media (max-width: 440px) {
+    header h1 {
+      font-size: 2.8rem;
+    }
+    header h2 {
+      font-size: 1.4rem;
+    }
+    form {
+      padding: 20px 20px 30px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>The Innovation Times</h1>
+  <h2>Login or Signup</h2>
+</header>
+
+<div class="tab-buttons" role="tablist">
+  <button id="tabLogin" class="active" role="tab" aria-selected="true" aria-controls="loginFormContainer" tabindex="0">Login</button>
+  <button id="tabSignup" role="tab" aria-selected="false" aria-controls="signupFormContainer" tabindex="-1">Signup</button>
+</div>
+
+<div id="loginFormContainer" class="form-container active" tabindex="0" role="tabpanel" aria-labelledby="tabLogin">
+  <form id="loginForm">
+    <label for="loginUsername">Username</label>
+    <input type="text" id="loginUsername" name="username" required autocomplete="username" />
+
+    <label for="loginPassword">Password</label>
+    <input type="password" id="loginPassword" name="password" required autocomplete="current-password" />
+
+    <button type="submit" class="submit-btn">Login</button>
+  </form>
+</div>
+
+<div id="signupFormContainer" class="form-container" tabindex="0" role="tabpanel" aria-labelledby="tabSignup">
+  <form id="signupForm">
+    <label for="signupUsername">Username</label>
+    <input type="text" id="signupUsername" name="username" required autocomplete="username" />
+
+    <label for="signupEmail">Email</label>
+    <input type="email" id="signupEmail" name="email" required autocomplete="email" />
+
+    <label for="signupPassword">Password</label>
+    <input type="password" id="signupPassword" name="password" required autocomplete="new-password" />
+
+    <button type="submit" class="submit-btn">Signup</button>
+  </form>
+</div>
+
+<footer>© 2025 The Innovation Times. All rights reserved.</footer>
+
+<script>
+  const tabLogin = document.getElementById('tabLogin');
+  const tabSignup = document.getElementById('tabSignup');
+  const loginFormContainer = document.getElementById('loginFormContainer');
+  const signupFormContainer = document.getElementById('signupFormContainer');
+
+  function setActiveTab(tab) {
+    if (tab === 'login') {
+      tabLogin.classList.add('active');
+      tabLogin.setAttribute('aria-selected', 'true');
+      tabLogin.tabIndex = 0;
+      tabSignup.classList.remove('active');
+      tabSignup.setAttribute('aria-selected', 'false');
+      tabSignup.tabIndex = -1;
+
+      loginFormContainer.classList.add('active');
+      signupFormContainer.classList.remove('active');
+
+      document.getElementById('loginUsername').focus();
+    } else if (tab === 'signup') {
+      tabSignup.classList.add('active');
+      tabSignup.setAttribute('aria-selected', 'true');
+      tabSignup.tabIndex = 0;
+      tabLogin.classList.remove('active');
+      tabLogin.setAttribute('aria-selected', 'false');
+      tabLogin.tabIndex = -1;
+
+      signupFormContainer.classList.add('active');
+      loginFormContainer.classList.remove('active');
+
+      document.getElementById('signupUsername').focus();
+    }
+  }
+
+  tabLogin.addEventListener('click', () => setActiveTab('login'));
+  tabSignup.addEventListener('click', () => setActiveTab('signup'));
+
+  [tabLogin, tabSignup].forEach(tab => {
+    tab.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+        e.preventDefault();
+        if (e.key === 'ArrowRight') {
+          setActiveTab(tab.id === 'tabLogin' ? 'signup' : 'login');
+        } else {
+          setActiveTab(tab.id === 'tabSignup' ? 'login' : 'signup');
+        }
+      }
+    });
+  });
+
+  // Redirect on submit, no data stored or validated
+  document.getElementById('loginForm').addEventListener('submit', e => {
+    e.preventDefault();
+    window.location.href = 'Ex1.html';
+  });
+
+  document.getElementById('signupForm').addEventListener('submit', e => {
+    e.preventDefault();
+    window.location.href = 'Ex1.html';
+  });
+</script>
+
+</body>
+</html>

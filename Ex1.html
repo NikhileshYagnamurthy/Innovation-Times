@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The Innovation Times - Headlines</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+  body {
+    margin: 0; padding: 30px 15px;
+    font-family: 'Roboto', sans-serif;
+    background: #f6f8fa;
+    color: #2b2f38;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 3rem;
+    user-select: none;
+  }
+  header h1 {
+    font-weight: 700;
+    font-size: 2.8rem; /* smaller than 3.6rem */
+    letter-spacing: 0.12em;
+    color: #90caf9;
+    position: relative;
+  }
+  header h1::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 100%;
+    height: 8px;
+    border-radius: 10px;
+    background: linear-gradient(90deg, #607d8b, #90a4ae);
+    filter: blur(6px);
+    opacity: 0.35;
+  }
+
+  header h2 {
+    font-weight: 400;
+    font-style: italic;
+    font-size: 1.8rem;
+    color: #607d8b;
+    margin-top: 0.3em;
+  }
+
+  .nav-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    justify-content: center;
+    margin-bottom: 3rem;
+  }
+  .nav-bar button {
+    background: linear-gradient(145deg, #e0e6eb, #c7d0d8);
+    border-radius: 30px;
+    border: 1.5px solid transparent;
+    padding: 12px 26px;
+    font-weight: 700;
+    color: #37474f;
+    cursor: pointer;
+    font-size: 1rem;
+    box-shadow:
+      inset 0 1.5px 0 #f9fbfc,
+      0 5px 15px rgba(0, 0, 0, 0.08);
+    transition: background 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    user-select: none;
+    min-width: 90px;
+  }
+
+  .nav-bar button:hover:not(:disabled) {
+    background: linear-gradient(145deg, #b0bec5, #90a4ae);
+    box-shadow:
+      inset 0 1.5px 0 #dfe7ec,
+      0 8px 20px rgba(0, 0, 0, 0.12);
+    border-color: #78909c;
+  }
+
+  .nav-bar button:disabled {
+    background: #78909c;
+    color: #e0e6eb;
+    cursor: default;
+    box-shadow: none;
+  }
+
+  main.category {
+    max-width: 900px;
+    width: 100%;
+    min-height: 300px;
+  }
+
+  .news-block {
+    display: flex;
+    background: white;
+    border-radius: 14px;
+    box-shadow:
+      0 8px 24px rgba(0, 0, 0, 0.06);
+    padding: 20px 24px;
+    gap: 24px;
+    align-items: center;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUp 0.5s forwards;
+    margin-bottom: 2rem;
+  }
+
+  @keyframes fadeUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .news-block img {
+    flex-shrink: 0;
+    width: 35%;
+    border-radius: 12px;
+    object-fit: cover;
+    box-shadow:
+      0 4px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  .news-content {
+    flex: 1;
+  }
+
+  .headline {
+    font-weight: 700;
+    font-size: 1.6rem;
+    margin-bottom: 0.6em;
+    color: #263238;
+    letter-spacing: 0.02em;
+  }
+
+  .news-text {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #546e7a;
+    white-space: pre-line;
+    user-select: text;
+  }
+
+  .nav-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin-top: 1.5rem;
+  }
+
+  .nav-buttons button {
+    background: linear-gradient(145deg, #607d8b, #90a4ae);
+    border-radius: 30px;
+    border: none;
+    padding: 12px 40px;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #e0e6eb;
+    cursor: pointer;
+    box-shadow:
+      0 8px 22px rgba(96, 125, 139, 0.5);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    user-select: none;
+    min-width: 120px;
+  }
+
+  .nav-buttons button:hover:not(:disabled) {
+    background: linear-gradient(145deg, #455a64, #607d8b);
+    box-shadow:
+      0 12px 28px rgba(69, 90, 100, 0.7);
+    transform: scale(1.05);
+  }
+
+  .nav-buttons button:disabled {
+    background: #cfd8dc;
+    color: #78909c;
+    cursor: default;
+    box-shadow: none;
+    transform: none;
+  }
+
+  footer.footer {
+    text-align: center;
+    font-weight: 500;
+    font-size: 0.85rem;
+    color: #78909c;
+    margin-top: auto;
+    padding-bottom: 25px;
+    user-select: none;
+  }
+
+  @media (max-width: 720px) {
+    .news-block {
+      flex-direction: column;
+    }
+    .news-block img {
+      width: 100%;
+      height: auto;
+    }
+  }
+</style>
+</head>
+<body>
+  <div id="datetime" style="position: fixed; top: 12px; right: 20px; font-family: 'Roboto', sans-serif; color: #cfd8dc; font-weight: 500; font-size: 1rem; user-select: none;"></div>
+
+<header>
+  <h1>The Innovation Times</h1>
+  <h2>Main Headlines</h2>
+</header>
+
+<div class="nav-bar" role="tablist" aria-label="News categories">
+  <button id="general-btn" role="tab" aria-selected="true" tabindex="0">General</button>
+  <button id="political-btn" role="tab" aria-selected="false" tabindex="-1">Political</button>
+  <button id="sports-btn" role="tab" aria-selected="false" tabindex="-1">Sports</button>
+  <button id="ecommerce-btn" role="tab" aria-selected="false" tabindex="-1">E-commerce</button>
+  <button id="technology-btn" role="tab" aria-selected="false" tabindex="-1">Technology</button>
+  <button id="emerging-btn" role="tab" aria-selected="false" tabindex="-1">Emerging</button>
+  <button id="crimes-btn" role="tab" aria-selected="false" tabindex="-1">Crimes</button>
+  <button id="games-btn" role="tab" aria-selected="false" tabindex="-1">Games</button>
+</div>
+
+<main class="category" aria-live="polite" aria-atomic="true" id="news-container">
+  <!-- News content populated by script -->
+</main>
+
+<div class="nav-buttons">
+  <button id="prev-btn" disabled aria-label="Previous headline">Prev</button>
+  <button id="next-btn" aria-label="Next headline">Next</button>
+</div>
+
+<footer class="footer">© 2025 The Innovation Times. All rights reserved.</footer>
+
+<script>
+  // Map your categories to NewsAPI categories or custom queries
+  const apiCategories = {
+    general: 'general',
+    political: 'politics',
+    sports: 'sports',
+    ecommerce: 'business',       // closest match for e-commerce
+    technology: 'technology',
+    emerging: 'science',         // using science for emerging tech/startups etc
+    crimes: 'crime',             // no direct category, use "crime" keyword in query
+    games: 'gaming'              // no direct category, use "gaming" keyword in query
+  };
+
+  const apiKey = 'f0e51a442a254c10b53e90ac2174393c'; // Your API key inserted here
+
+  let newsByCategory = {
+    general: [],
+    political: [],
+    sports: [],
+    ecommerce: [],
+    technology: [],
+    emerging: [],
+    crimes: [],
+    games: []
+  };
+
+  let currentCategory = 'general';
+  let currentIndex = 0;
+
+  const newsContainer = document.getElementById('news-container');
+  const prevBtn = document.getElementById('prev-btn');
+  const nextBtn = document.getElementById('next-btn');
+  const navButtons = document.querySelectorAll('.nav-bar button');
+
+  function updateNews() {
+    const newsList = newsByCategory[currentCategory];
+    if (!newsList || newsList.length === 0) {
+      newsContainer.innerHTML = `<p style="color:#607d8b; font-style: italic; font-size: 1.2rem;">No news available for ${currentCategory} right now.</p>`;
+      prevBtn.disabled = true;
+      nextBtn.disabled = true;
+      return;
+    }
+
+    const news = newsList[currentIndex];
+    // Clear container
+    newsContainer.innerHTML = '';
+    // Create news block
+    const newsBlock = document.createElement('article');
+    newsBlock.className = 'news-block';
+    newsBlock.setAttribute('tabindex', '0');
+
+    // Use news.urlToImage or fallback to placeholder
+    const img = document.createElement('img');
+    img.src = news.urlToImage || `https://picsum.photos/seed/${currentCategory + currentIndex}/350/230`;
+    img.alt = `Image related to ${news.title || news.headline}`;
+    newsBlock.appendChild(img);
+
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'news-content';
+
+    const headline = document.createElement('h3');
+    headline.className = 'headline';
+    headline.textContent = news.title || news.headline || 'Headline not available';
+    contentDiv.appendChild(headline);
+
+    const text = document.createElement('p');
+    text.className = 'news-text';
+    text.textContent = news.description || news.text || 'No details available.';
+    contentDiv.appendChild(text);
+
+    newsBlock.appendChild(contentDiv);
+    newsContainer.appendChild(newsBlock);
+
+    prevBtn.disabled = currentIndex === 0;
+    nextBtn.disabled = currentIndex === newsList.length - 1;
+
+    // Manage tab index and aria-selected for nav buttons
+    navButtons.forEach(btn => {
+      if(btn.id === currentCategory + '-btn') {
+        btn.setAttribute('aria-selected', 'true');
+        btn.disabled = false;
+        btn.tabIndex = 0;
+      } else {
+        btn.setAttribute('aria-selected', 'false');
+        btn.disabled = false;
+        btn.tabIndex = -1;
+      }
+    });
+
+    // Focus on news block for accessibility
+    newsBlock.focus();
+  }
+
+  async function fetchNewsForCategory(category) {
+    // Map category to API category or keyword
+    let queryCategory = apiCategories[category];
+    // NewsAPI doesn't have some categories, so we use keyword search for them
+    let url;
+    if (['crimes', 'games', 'emerging', 'ecommerce', 'political'].includes(category)) {
+      // Use keyword search for these categories
+      let keywords = {
+        crimes: 'crime OR cybercrime OR hacking OR smuggling',
+        games: 'gaming OR esports OR "video games"',
+        emerging: 'startup OR innovation OR entrepreneurship',
+        ecommerce: 'ecommerce OR online shopping OR "online sales"',
+        political: 'politics OR parliament OR election'
+      };
+      url = `https://newsapi.org/v2/everything?q=${encodeURIComponent(keywords[category])}&language=en&pageSize=10&apiKey=${apiKey}`;
+    } else {
+      // Use top headlines by category for others
+      url = `https://newsapi.org/v2/top-headlines?category=${queryCategory}&language=en&pageSize=10&apiKey=${apiKey}`;
+    }
+
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      if (data.status === 'ok' && data.articles.length > 0) {
+        newsByCategory[category] = data.articles;
+        // Reset index if we are updating the current category
+        if (category === currentCategory) {
+          currentIndex = 0;
+          updateNews();
+        }
+      } else {
+        console.warn(`No news found for category: ${category}`, data);
+      }
+    } catch (error) {
+      console.error('Error fetching news:', error);
+    }
+  }
+
+  function fetchAllCategories() {
+    Object.keys(apiCategories).forEach(category => {
+      fetchNewsForCategory(category);
+    });
+  }
+
+  navButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const selectedCategory = btn.id.replace('-btn', '');
+      if(currentCategory !== selectedCategory) {
+        currentCategory = selectedCategory;
+        currentIndex = 0;
+        updateNews();
+        // Optionally fetch fresh news for this category on selection
+        fetchNewsForCategory(currentCategory);
+      }
+    });
+    btn.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+        let idx = Array.from(navButtons).indexOf(document.activeElement);
+        if (e.key === 'ArrowRight') {
+          idx = (idx + 1) % navButtons.length;
+        } else {
+          idx = (idx - 1 + navButtons.length) % navButtons.length;
+        }
+        navButtons[idx].focus();
+        e.preventDefault();
+      }
+    });
+  });
+
+  prevBtn.addEventListener('click', () => {
+    if (currentIndex > 0) {
+      currentIndex--;
+      updateNews();
+    }
+  });
+  nextBtn.addEventListener('click', () => {
+    const newsList = newsByCategory[currentCategory];
+    if (currentIndex < newsList.length - 1) {
+      currentIndex++;
+      updateNews();
+    }
+  });
+
+  // Show current date and time in top right
+  function updateDateTime() {
+    const dt = new Date();
+    const options = {weekday: 'short', year: 'numeric', month: 'short', day: 'numeric', hour:'2-digit', minute:'2-digit', second:'2-digit'};
+    document.getElementById('datetime').textContent = dt.toLocaleString('en-US', options);
+  }
+  setInterval(updateDateTime, 1000);
+  updateDateTime();
+
+  // Initial fetch and periodic refresh
+  fetchAllCategories();
+  setInterval(fetchAllCategories, 60000); // refresh every 60 seconds
+
+</script>
+</body>
+</html>
